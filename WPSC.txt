@@ -1,0 +1,219 @@
+Sub emailaspdf()
+
+Dim EApp As Object
+Set EApp = CreateObject("Outlook.Application")
+
+Dim EItem As Object
+Set EItem = EApp.CreateItem(0)
+
+Dim invno As Long
+Dim reqnam As String
+Dim sunam As String
+Dim dtsue As Date
+Dim sdtsue As Date
+Dim edtsue As Date
+Dim path As String
+Dim filnam As String
+Dim nextrec As Range
+
+invno = Range("Q4")
+reqnam = Range("C11")
+sunam = Range("D16")
+dtsue = Range("Q2")
+sdtsue = Range("D13")
+edtsue = Range("D14")
+path = "C:\Users\Bala Ganesh M\Desktop\VB FILES\"
+filnam = invno & " - " & sunam
+
+ActiveSheet.ExportAsFixedFormat Type:=xlTypePDF, ignoreprintareas:=False, filename:=path & filnam
+
+
+Set nextrec = Sheet2.Range("A1048576").End(xlUp).Offset(1, 0)
+
+nextrec = invno
+nextrec.Offset(0, 1) = reqnam
+nextrec.Offset(0, 2) = sunam
+nextrec.Offset(0, 3) = dtsue
+nextrec.Offset(0, 4) = sdtsue
+nextrec.Offset(0, 5) = edtsue
+nextrec.Offset(0, 8) = Now
+
+Sheet2.Hyperlinks.Add anchor:=nextrec.Offset(0, 6), Address:=path & filnam & ".pdf"
+
+With EItem
+
+    .To = Range("O15")
+    .Subject = "Workorder Permit:" & invno
+    .Body = " Please Find the Workorder Permit attached. "
+    .Attachments.Add (path & filnam & ".pdf")
+    .display
+
+End With
+    
+    
+End Sub
+
+
+
+
+Sub Saveaspdf()
+
+Dim invno As Long
+Dim reqnam As String
+Dim sunam As String
+Dim dtsue As Date
+Dim sdtsue As Date
+Dim edtsue As Date
+Dim path As String
+Dim filnam As String
+Dim nextrec As Range
+
+invno = Range("Q4")
+reqnam = Range("C11")
+sunam = Range("D16")
+dtsue = Range("Q2")
+sdtsue = Range("D13")
+edtsue = Range("D14")
+path = "C:\Users\Bala Ganesh M\Desktop\VB FILES\"
+filnam = invno & " - " & sunam
+
+ActiveSheet.ExportAsFixedFormat Type:=xlTypePDF, ignoreprintareas:=False, filename:=path & filnam
+
+Set nextrec = Sheet2.Range("A1048576").End(xlUp).Offset(1, 0)
+
+nextrec = invno
+nextrec.Offset(0, 1) = reqnam
+nextrec.Offset(0, 2) = sunam
+nextrec.Offset(0, 3) = dtsue
+nextrec.Offset(0, 4) = sdtsue
+nextrec.Offset(0, 5) = edtsue
+
+Sheet2.Hyperlinks.Add anchor:=nextrec.Offset(0, 6), Address:=path & filnam & ".pdf"
+
+
+
+End Sub
+
+
+
+
+
+Sub svasxlsx()
+
+Dim invno As Long
+Dim reqnam As String
+Dim sunam As String
+Dim dtsue As Date
+Dim sdtsue As Date
+Dim edtsue As Date
+Dim path As String
+Dim filnam As String
+Dim nextrec As Range
+
+invno = Range("Q4")
+reqnam = Range("C11")
+sunam = Range("D16")
+dtsue = Range("Q2")
+sdtsue = Range("D13")
+edtsue = Range("D14")
+path = "C:\Users\Bala Ganesh M\Desktop\VB FILES\"
+filnam = invno & " - " & sunam
+
+'copy in the permit sheet to a new workbook
+
+Sheet1.Copy
+
+'then delet all the buttons on the worksheet
+
+Dim shp As Shape
+
+'to delete all the shape below cmd
+
+'For Each shp In ActiveSheet.Shapes
+    'shp.Delete
+'Next shp
+
+'below command only to save pic
+
+For Each shp In ActiveSheet.Shapes
+    If shp.Type <> msoPicture Then shp.Delete
+Next shp
+
+'save teh new workbokk to a specified folder
+
+With ActiveWorkbook
+    .Sheets(1).Name = "workPermit"
+    .SaveAs filename:=path & filnam, FileFormat:=51
+    .Close
+End With
+
+''close the workbook
+'need to put the details of the Permit in the record sheet
+
+Set nextrec = Sheet2.Range("A1048576").End(xlUp).Offset(1, 0)
+
+nextrec = invno
+nextrec.Offset(0, 1) = reqnam
+nextrec.Offset(0, 2) = sunam
+nextrec.Offset(0, 3) = dtsue
+nextrec.Offset(0, 4) = sdtsue
+nextrec.Offset(0, 5) = edtsue
+
+Sheet2.Hyperlinks.Add anchor:=nextrec.Offset(0, 7), Address:=path & filnam & ".xlsx"
+
+End Sub
+
+
+
+
+Sub newinvoc()
+
+Dim invno As Long
+
+invno = Range("Q4")
+
+MsgBox "Your next Work Permite number is " & invno + 1
+
+Range("Q4") = invno + 1
+
+Range("G11").Select
+
+''range ("C4:D4,B10,B19:G35").ClearContents
+
+''Range("B10").Select
+
+ThisWorkbook.Save
+
+End Sub
+
+
+
+
+
+Sub Record()
+
+Dim invno As Long
+Dim reqnam As String
+Dim sunam As String
+Dim dtsue As Date
+Dim sdtsue As Date
+Dim edtsue As Date
+Dim nextrec As Range
+
+invno = Range("Q4")
+reqnam = Range("C11")
+sunam = Range("D16")
+dtsue = Range("Q2")
+sdtsue = Range("D13")
+edtsue = Range("D14")
+
+Set nextrec = Sheet2.Range("A1048576").End(xlUp).Offset(1, 0)
+
+nextrec = invno
+nextrec.Offset(0, 1) = reqnam
+nextrec.Offset(0, 2) = sunam
+nextrec.Offset(0, 3) = dtsue
+nextrec.Offset(0, 4) = sdtsue
+nextrec.Offset(0, 5) = edtsue
+
+End Sub
