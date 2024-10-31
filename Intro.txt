@@ -1,0 +1,10 @@
+Project Title : WORK PERMIT
+Date of Created : 10/August/2022 wednesday time 10.32 AM
+======================================================================================================
+
+WORK PERMIT IN EXCEL VBA PROGRAM DEV. 2022
+
+1. Work Permit for managing the record and reduced the fill type timing.
+2. saving the data in pdf and excel format.
+3. autogenerate the next permit no after saving the data.
+4. writen the code in vba format using for small scale to managing the activites inside excel.
